@@ -38,20 +38,62 @@
     ]
   }
   </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #faf9f5; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
-    #__bundler_loading { position: fixed; bottom: 20px; right: 20px; font: 13px/1.4 -apple-system, BlinkMacSystemFont, sans-serif; color: #666; background: #fff; padding: 8px 14px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.12); z-index: 10000; }
-    #__bundler_thumbnail { position: fixed; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #faf9f5; z-index: 9999; }
-    #__bundler_thumbnail svg { width: 100%; height: 100%; object-fit: contain; }
-    #__bundler_placeholder { color: #999; font-size: 14px; }
+    :root {
+      --bg: #faf9f5; --cream: #ebe4cc; --sage: #5f6449; --sage-dark: #4b4f39;
+      --ink: #2b2e24; --paper: #fbf8f1; --muted: #3f4235;
+    }
+    html { -webkit-text-size-adjust: 100%; }
+    body {
+      background: var(--bg); color: var(--ink);
+      font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      line-height: 1.6; -webkit-font-smoothing: antialiased;
+    }
+    #__seo_content { display: block; }
+    .lp-hero {
+      min-height: 100svh; display: flex; flex-direction: column; justify-content: center;
+      max-width: 640px; margin: 0 auto; padding: 40px 22px 30px;
+    }
+    .lp-name {
+      font-family: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+      font-weight: 600; font-size: clamp(34px, 9vw, 46px); line-height: 1.04; letter-spacing: .01em;
+    }
+    .lp-spec {
+      margin-top: 8px; font-size: 15px; font-weight: 500; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--sage);
+    }
+    .lp-services { margin-top: 18px; font-size: 17px; color: var(--muted); max-width: 40ch; }
+    .lp-cta { margin-top: 26px; display: flex; flex-wrap: wrap; gap: 12px; }
+    .lp-btn {
+      flex: 1 1 190px; min-height: 54px; display: inline-flex; align-items: center;
+      justify-content: center; gap: 9px; padding: 15px 20px; border-radius: 12px;
+      font-size: 17px; font-weight: 700; text-decoration: none; line-height: 1.1;
+    }
+    .lp-btn svg { width: 20px; height: 20px; flex: none; }
+    .lp-btn--wa { background: var(--sage); color: var(--paper); }
+    .lp-btn--wa:active { background: var(--sage-dark); }
+    .lp-btn--tel { background: var(--ink); color: var(--paper); }
+    .lp-loc { margin-top: 22px; font-size: 14.5px; color: var(--sage); line-height: 1.5; }
+    .lp-body { max-width: 640px; margin: 0 auto; padding: 4px 22px 56px; }
+    .lp-body section { margin-top: 40px; }
+    .lp-eyebrow { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--sage); }
+    .lp-body h2 {
+      font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600;
+      font-size: 27px; line-height: 1.15; margin-top: 6px;
+    }
+    .lp-body p { margin-top: 12px; color: var(--muted); }
+    .lp-body ul, .lp-body ol { margin-top: 12px; padding-left: 0; list-style: none; }
+    .lp-body li { margin-bottom: 12px; }
+    .lp-body a { color: var(--sage); }
+    .lp-foot {
+      margin-top: 40px; padding-top: 20px; border-top: 1px solid #e2ddca;
+      font-size: 13.5px; color: var(--sage);
+    }
   </style>
-  <noscript>
-    <style>
-      #__bundler_loading, #__bundler_thumbnail { display: none !important; }
-      body { display: block !important; }
-    </style>
-  </noscript>
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-0ET0N1MNZV"></script>
   <script>
@@ -60,69 +102,90 @@
     gtag('js', new Date());
     gtag('config', 'G-0ET0N1MNZV');
   </script>
+  <script>
+    // Dispara eventos de conversão em cliques de WhatsApp/telefone. O listener
+    // vive em window, então continua ativo mesmo após o app JS substituir o DOM —
+    // cobre tanto os botões estáticos quanto os botões do app renderizado.
+    window.addEventListener('click', function (e) {
+      var el = e.target;
+      var a = el && el.closest ? el.closest('a[href]') : null;
+      if (!a || typeof gtag !== 'function') return;
+      var href = (a.getAttribute('href') || '').toLowerCase();
+      if (href.indexOf('wa.me') > -1 || href.indexOf('whatsapp') > -1) {
+        gtag('event', 'contato_whatsapp');
+      } else if (href.indexOf('tel:') === 0) {
+        gtag('event', 'contato_telefone');
+      }
+    }, true);
+  </script>
 </head>
 <body>
-  <div id="__bundler_thumbnail">
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" fill="#EBE4CC"></rect><g fill="none" stroke="#5F6449" stroke-width="3.4" stroke-linecap="round"><path d="M32 42a11 11 0 0 1 11-11h9a11 11 0 0 1 0 22h-3l-6 6v-6h0a11 11 0 0 1-11-11z"></path><path d="M64 58a9 9 0 0 0-9-9"></path></g><text x="50" y="82" font-family="Playfair Display,Georgia,serif" font-size="15" fill="#2b2e24" text-anchor="middle" font-weight="bold">IC</text></svg>
-</div>
-  <div id="__bundler_loading">Unpacking...</div>
-
-  <!-- Conteúdo estático indexável: presente já na resposta HTML inicial para
-       rastreadores e usuários sem JavaScript. Usuários com JS têm todo o
-       <html> substituído pelo app real, então este bloco não é exibido a eles. -->
-  <main id="__seo_content" style="max-width:820px;margin:0 auto;padding:48px 24px;color:#2b2e24;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Georgia,serif;line-height:1.7;text-align:left;">
-    <header>
-      <p style="letter-spacing:.08em;text-transform:uppercase;font-size:14px;color:#5F6449;margin-bottom:8px;">Psiquiatria · CRM/SP 215.342</p>
-      <h1 style="font-size:34px;line-height:1.2;margin-bottom:16px;">Dra. Ingrid Cavalcante</h1>
-      <p style="font-size:19px;margin-bottom:24px;">Cuidar da mente é cuidar do todo. Um espaço de escuta qualificada e acolhimento para promover saúde e qualidade de vida.</p>
-      <p><a href="https://wa.me/5511912599628" style="display:inline-block;background:#2b2e24;color:#FBF8F1;padding:12px 22px;border-radius:8px;text-decoration:none;">Agendar consulta pelo WhatsApp</a></p>
-    </header>
-
-    <section style="margin-top:48px;">
-      <p style="letter-spacing:.08em;text-transform:uppercase;font-size:13px;color:#5F6449;">Saúde mental como um todo</p>
-      <h2 style="font-size:26px;margin:8px 0 16px;">Um cuidado integral, humano e baseado em evidências</h2>
-      <p>Sou médica com atuação em psiquiatria e psicoterapia com foco no cuidado integral da saúde mental, oferecendo um atendimento humanizado, ético e baseado em evidências científicas. Acredito que cada paciente possui uma história única e, por isso, valorizo a escuta atenta, o acolhimento e a construção conjunta de um plano terapêutico individualizado.</p>
-      <p style="margin-top:14px;">Minha prática clínica é pautada no respeito, na empatia e na busca por tratamentos eficazes, sempre considerando os aspectos biológicos, psicológicos e sociais que influenciam o bem-estar emocional.</p>
-      <p style="margin-top:14px;">Meu compromisso é oferecer um espaço seguro, livre de julgamentos, onde cada pessoa possa encontrar apoio, compreensão e caminhos para uma melhor qualidade de vida.</p>
+  <!-- Conteúdo estático mobile-first: presente no HTML servido, sem depender de JS.
+       Visível de imediato para usuários e rastreadores; o app JS o substitui ao
+       terminar de carregar (a renderização JS existente foi mantida). -->
+  <main id="__seo_content">
+    <section class="lp-hero">
+      <h1 class="lp-name">Dra. Ingrid Cavalcante</h1>
+      <p class="lp-spec">Psiquiatra • CRM/SP 215.342</p>
+      <p class="lp-services">Consultas presenciais em Moema (São Paulo) e atendimento online, por telemedicina, para adultos.</p>
+      <div class="lp-cta">
+        <a class="lp-btn lp-btn--wa" href="https://wa.me/5511912599628" aria-label="Agendar pelo WhatsApp">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.86 9.86 0 0 0 12.04 2Zm0 1.83c2.16 0 4.19.84 5.72 2.37a8.05 8.05 0 0 1 2.37 5.71c0 4.46-3.63 8.08-8.09 8.08a8.06 8.06 0 0 1-4.11-1.13l-.29-.17-3.05.8.81-2.97-.19-.31a8.03 8.03 0 0 1-1.23-4.31c0-4.46 3.63-8.08 8.09-8.08h.01Zm4.66 10.16c-.25-.13-1.5-.74-1.73-.82-.23-.08-.4-.13-.57.13-.17.25-.65.82-.8.99-.15.17-.29.19-.54.06-.25-.13-1.07-.4-2.04-1.26-.75-.67-1.26-1.5-1.41-1.75-.15-.25-.02-.39.11-.51.11-.11.25-.29.38-.44.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.57-1.37-.78-1.87-.2-.49-.41-.42-.57-.43l-.48-.01c-.17 0-.44.06-.67.31-.23.25-.88.86-.88 2.1 0 1.24.9 2.43 1.03 2.6.13.17 1.77 2.7 4.29 3.79.6.26 1.07.41 1.43.53.6.19 1.15.16 1.58.1.48-.07 1.5-.61 1.71-1.2.21-.59.21-1.1.15-1.2-.06-.11-.23-.17-.48-.29Z"/></svg>
+          Agendar pelo WhatsApp
+        </a>
+        <a class="lp-btn lp-btn--tel" href="tel:+5511912599628" aria-label="Ligar para o consultório">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.5 15.5 0 0 0 6.6 6.6l2.2-2.2c.28-.28.7-.37 1.05-.25 1.1.36 2.3.56 3.5.56.55 0 1 .45 1 1V20c0 .55-.45 1-1 1A17 17 0 0 1 3 4c0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.2.2 2.4.56 3.5.12.35.03.77-.25 1.05L6.6 10.8Z"/></svg>
+          Ligar
+        </a>
+      </div>
+      <p class="lp-loc">Consultório em Moema — São Paulo/SP · Atendimento online para adultos em todo o Brasil.</p>
     </section>
 
-    <section style="margin-top:48px;">
-      <h2 style="font-size:24px;margin-bottom:16px;">Formação</h2>
-      <ul style="list-style:none;padding:0;">
-        <li style="margin-bottom:12px;"><strong>Medicina</strong> — Graduação pela Universidade de Fortaleza (Unifor).</li>
-        <li style="margin-bottom:12px;"><strong>Psiquiatria</strong> — Residência pela Universidade de Santo Amaro (Unisa · SP).</li>
-        <li style="margin-bottom:12px;"><strong>Psicodrama</strong> — Formação pela Sociedade Paulistana de Psicodrama (SOVAP).</li>
-      </ul>
-    </section>
+    <div class="lp-body">
+      <section>
+        <p class="lp-eyebrow">Sobre</p>
+        <h2>Um cuidado integral, humano e baseado em evidências</h2>
+        <p>Médica com atuação em psiquiatria e psicoterapia, com foco no cuidado integral da saúde mental. O atendimento é humanizado, ético e baseado em evidências científicas, considerando os aspectos biológicos, psicológicos e sociais de cada pessoa.</p>
+        <p>Cada paciente tem uma história única; por isso, valorizo a escuta atenta, o acolhimento e a construção conjunta de um plano terapêutico individualizado, em um espaço seguro e livre de julgamentos.</p>
+      </section>
 
-    <section style="margin-top:48px;">
-      <h2 style="font-size:24px;margin-bottom:16px;">Como cuido — um cuidado que enxerga a pessoa inteira</h2>
-      <ul style="list-style:none;padding:0;">
-        <li style="margin-bottom:12px;"><strong>Escuta</strong> — escuta atenta e acolhimento; cada história é única e merece tempo e presença.</li>
-        <li style="margin-bottom:12px;"><strong>Evidência</strong> — conduta ética e baseada em ciência, considerando corpo, mente e contexto de vida.</li>
-        <li style="margin-bottom:12px;"><strong>Acolhimento</strong> — um espaço seguro e livre de julgamentos, com um plano terapêutico construído em conjunto.</li>
-      </ul>
-    </section>
+      <section>
+        <h2>Atendimento</h2>
+        <ul>
+          <li><strong>Presencial</strong> — consultório em Moema, São Paulo/SP.</li>
+          <li><strong>Online (telemedicina)</strong> — consulta por videochamada, onde você estiver.</li>
+          <li><strong>Público atendido</strong> — adultos.</li>
+        </ul>
+      </section>
 
-    <section style="margin-top:48px;">
-      <h2 style="font-size:24px;margin-bottom:16px;">Como funciona — do primeiro contato ao cuidado contínuo</h2>
-      <ol style="padding-left:20px;">
-        <li style="margin-bottom:12px;"><strong>Primeiro contato</strong> — agende pelo WhatsApp e conte brevemente o que procura.</li>
-        <li style="margin-bottom:12px;"><strong>Consulta inicial</strong> — avaliação cuidadosa da sua história e do seu momento.</li>
-        <li style="margin-bottom:12px;"><strong>Plano de cuidado</strong> — conduta individualizada e acompanhamento contínuo.</li>
-      </ol>
-      <p style="margin-top:14px;">Atendimento presencial em São Paulo e online, onde você estiver.</p>
-    </section>
+      <section>
+        <h2>Formação</h2>
+        <ul>
+          <li><strong>Medicina</strong> — Graduação pela Universidade de Fortaleza (Unifor).</li>
+          <li><strong>Psiquiatria</strong> — Residência pela Universidade de Santo Amaro (Unisa/SP).</li>
+          <li><strong>Psicodrama</strong> — Formação pela Sociedade Paulistana de Psicodrama (SOVAP).</li>
+        </ul>
+      </section>
 
-    <section style="margin-top:48px;">
-      <h2 style="font-size:24px;margin-bottom:16px;">Contato</h2>
-      <p>Dê o primeiro passo. Atendimento presencial em São Paulo e online.</p>
-      <ul style="list-style:none;padding:0;margin-top:12px;">
-        <li style="margin-bottom:8px;">Telefone / WhatsApp: <a href="https://wa.me/5511912599628" style="color:#5F6449;">+55 (11) 91259-9628</a></li>
-        <li style="margin-bottom:8px;">Instagram: <a href="https://instagram.com/ingridcavalcantem" style="color:#5F6449;">@ingridcavalcantem</a></li>
-      </ul>
-      <p style="margin-top:24px;font-size:14px;color:#5F6449;">Dra. Ingrid Cavalcante · CRM/SP 215.342 · Cuidar da mente é cuidar do todo.</p>
-    </section>
+      <section>
+        <h2>Como funciona</h2>
+        <ol>
+          <li><strong>Primeiro contato</strong> — agende pelo WhatsApp e conte brevemente o que procura.</li>
+          <li><strong>Consulta inicial</strong> — avaliação cuidadosa da sua história e do seu momento.</li>
+          <li><strong>Acompanhamento</strong> — conduta individualizada e cuidado contínuo.</li>
+        </ol>
+      </section>
+
+      <section>
+        <h2>Contato</h2>
+        <ul>
+          <li>WhatsApp / Telefone: <a href="https://wa.me/5511912599628">+55 (11) 91259-9628</a></li>
+          <li>Instagram: <a href="https://instagram.com/ingridcavalcantem" rel="noopener">@ingridcavalcantem</a></li>
+          <li>Localização: Moema, São Paulo/SP · Atendimento online por telemedicina</li>
+        </ul>
+        <p class="lp-foot">Dra. Ingrid Cavalcante · Médica Psiquiatra · CRM/SP 215.342</p>
+      </section>
+    </div>
   </main>
 
   <script>
